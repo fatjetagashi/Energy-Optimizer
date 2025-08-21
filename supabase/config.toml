@@ -1,0 +1,4 @@
+project_id = "ctolvnqqdlhjpozqjsfy"
+
+[functions.optimize-energy]
+verify_jwt = false

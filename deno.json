@@ -1,0 +1,12 @@
+{
+  "importMap": "import_map.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "lib": ["dom", "esnext", "dom.iterable"],
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "moduleDetection": "force"
+  }
+}
