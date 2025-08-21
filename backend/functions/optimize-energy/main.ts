@@ -1,8 +1,6 @@
 import { serve } from "https://deno.land/std@0.208.0/http/server.ts";
 
-// Gjatë testimit mund të lësh "*".
-// Kur ta kesh domenin e Netlify, zëvendëso me: "https://emri-yt.netlify.app"
-const ALLOWED_ORIGIN = "*";
+const ALLOWED_ORIGIN = "*"; // për test. Më vonë vendose domainin e Netlify
 
 function withCORS(resp: Response) {
   const h = new Headers(resp.headers);
@@ -13,20 +11,31 @@ function withCORS(resp: Response) {
 }
 
 serve(async (req) => {
-  if (req.method === "OPTIONS") {
-    // Preflight CORS
+  const { method } = req;
+  const { pathname } = new URL(req.url);
+
+  if (method === "OPTIONS") {
     return withCORS(new Response(null, { status: 204 }));
   }
 
-  const { pathname } = new URL(req.url);
-
-  // Endpoint prove
   if (pathname === "/hello") {
-    return withCORS(
-      new Response(JSON.stringify({ ok: true, msg: "Hello from Deno!" }), {
-        headers: { "Content-Type": "application/json" },
-      }),
-    );
+    if (method === "GET") {
+      return withCORS(new Response(JSON.stringify({ ok: true, msg: "Hello from Deno!" }), {
+        headers: { "Content-Type": "application/json" }
+      }));
+    }
+    if (method === "POST") {
+      const data = await req.json().catch(() => null);
+      if (!data) {
+        return withCORS(new Response(JSON.stringify({ error: "Empty body" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json" }
+        }));
+      }
+      return withCORS(new Response(JSON.stringify({ ok: true, received: data }), {
+        headers: { "Content-Type": "application/json" }
+      }));
+    }
   }
 
   return withCORS(new Response("Not found", { status: 404 }));
