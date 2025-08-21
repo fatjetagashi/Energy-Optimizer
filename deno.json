@@ -10,6 +10,6 @@
     "moduleDetection": "force"
   },
   "deploy": {
-    "entrypoint": "backend/functions/optimize-energy/index.ts"
+    "entrypoint": "backend/functions/optimize-energy/main.ts"
   }
 }
