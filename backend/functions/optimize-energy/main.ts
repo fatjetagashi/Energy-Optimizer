@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.208.0/http/server.ts";
 
-const ALLOWED_ORIGIN = "*"; // për test. Më vonë vendose domainin e Netlify
+const ALLOWED_ORIGIN = "*"; // gjatë testimit; më vonë vendose domenin e Netlify
 
 function withCORS(resp: Response) {
   const h = new Headers(resp.headers);
@@ -21,7 +21,7 @@ serve(async (req) => {
   if (pathname === "/hello") {
     if (method === "GET") {
       return withCORS(new Response(JSON.stringify({ ok: true, msg: "Hello from Deno!" }), {
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json" },
       }));
     }
     if (method === "POST") {
@@ -29,11 +29,11 @@ serve(async (req) => {
       if (!data) {
         return withCORS(new Response(JSON.stringify({ error: "Empty body" }), {
           status: 400,
-          headers: { "Content-Type": "application/json" }
+          headers: { "Content-Type": "application/json" },
         }));
       }
       return withCORS(new Response(JSON.stringify({ ok: true, received: data }), {
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json" },
       }));
     }
   }
