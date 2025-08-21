@@ -7,7 +7,6 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    
     "moduleDetection": "force"
   },
   "deploy": {
